@@ -1,0 +1,54 @@
+import javax.swing.*;
+import java.util.*;
+import javax.swing.table.*;
+
+public class AlToTable extends JFrame {
+
+	private final static String[] header = {"Name", "age", "Sex"};
+
+	AlToTable(ArrayList<String> al) {
+		MyModel mm = new MyModel(al, header);
+		JTable table = new JTable(mm);
+		add(new JScrollPane(table));
+		setSize(200, 200);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	}
+
+	class MyModel extends AbstractTableModel {
+
+		private ArrayList<String> al;
+		private String[] header;
+
+		MyModel(ArrayList<String> al, String[] header) {
+			this.al = al;
+			this.header = header;
+		}
+
+		public int getColumnCount() {
+			return header.length;
+		}
+
+		public int getRowCount() {
+			return al.size();
+		}
+
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			String[] token = al.get(rowIndex).split(",");
+			return token[columnIndex];
+		}
+
+		public String getColumnName(int col) {
+			return header[col];
+		}
+
+	}
+
+	public static void main(String[] args) {
+		ArrayList<String> al = new ArrayList<String>();
+		al.add("PBL,59,M");
+		al.add("Madona,20,F");
+		al.add("teQuiero,???,M");
+		new AlToTable(al);
+	}
+}
