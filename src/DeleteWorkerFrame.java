@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 
 public class DeleteWorkerFrame extends JFrame implements ActionListener{
 
-    /*private JLabel textName;
-    private JLabel textSurname;*/
     private JLabel textPassport;
     private JTextField name;
     private JTextField surname;
@@ -23,24 +21,16 @@ public class DeleteWorkerFrame extends JFrame implements ActionListener{
         setLayout(new BorderLayout());
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2,1));
+        panel.setLayout(new GridLayout(3,1));
 
-        /*textName = new JLabel("Enter name");
-        name = new JTextField();
-        textSurname = new JLabel("Enter surname");
-        surname = new JTextField();*/
         textPassport = new JLabel("Enter passport number");
         passportNumber = new JTextField();
 
-       /* panel.add(textName);
-        panel.add(name);
-        panel.add(textSurname);
-        panel.add(surname);*/
         panel.add(textPassport);
         panel.add(passportNumber);
 
         JPanel container = new JPanel();
-        container.setLayout(new GridLayout(3,1));
+        container.setLayout(new GridLayout(1,1));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1,3));
@@ -72,19 +62,22 @@ public class DeleteWorkerFrame extends JFrame implements ActionListener{
         String res = e.getActionCommand();
         switch (res) {
             case "Delete":
+                boolean isFind = false;
                 for (int i = 0; i < WorkersTable.workers.size(); i++) {
                     if (passportNumber.getText() != null || !passportNumber.getText().isEmpty()) {
                         if (passportNumber.getText().equals(WorkersTable.workers.get(i).getPassportNumber())) {
                             WorkersTable.workers.remove(i);
+                            isFind = true;
                         }
                     }
+                }
+                if (!isFind) {
+                    new NotFoundMassage();
                 }
                 MainFrame.workersTable.fireTableDataChanged();
                 this.dispose();
                 break;
             case "Clear":
-                name.setText("");
-                surname.setText("");
                 passportNumber.setText("");
                 break;
             case "Back":

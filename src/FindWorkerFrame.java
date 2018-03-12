@@ -113,6 +113,9 @@ public class FindWorkerFrame extends JFrame implements ActionListener {
             }
         }
         findWorkersTable.fireTableDataChanged();
+        if (findWorkers.isEmpty()) {
+            new NotFoundMassage();
+        }
     }
 
     private void findBySurname() {
